@@ -4,7 +4,6 @@ use std::{
     net::{TcpListener, TcpStream},
 };
 
-
 fn main() {
     let mut x = 4;
     println!("x is: {}", x);
@@ -63,8 +62,7 @@ fn main() {
     let letter: char = 'a';
     println!("letter is: {}", letter);
 
-
-  
+    read_dir("../bassomc/src/html");
 
     //made a webserver with rust that will render a html file and it wil run on port 7878
     let listener = TcpListener::bind("127.0.0.1:7878").unwrap();
@@ -89,8 +87,26 @@ fn handle_connection(mut stream: TcpStream) {
     let contents = fs::read_to_string(filename).unwrap();
     let length = contents.len();
 
-    let response =
-        format!("{status_line}\r\nContent-Length: {length}\r\n\r\n{contents}");
+    let response = format!("{status_line}\r\nContent-Length: {length}\r\n\r\n{contents}");
 
     stream.write_all(response.as_bytes()).unwrap();
+}
+
+fn read_dir(path: &str) {
+    let entries = fs::read_dir(path).unwrap();
+
+    for entry in entries {
+        let entry = entry.unwrap();
+        let path = entry.path();
+        let exclude_files = ["target", ".git"];
+        if path.is_dir() {
+            if exclude_files.contains(&path.file_name().unwrap().to_str().unwrap()) {
+                continue;
+            }
+            println!("Directory: {}", path.display());
+            read_dir(&path.display().to_string())
+        } else {
+            println!("File: {}", path.display());
+        }
+    }
 }
