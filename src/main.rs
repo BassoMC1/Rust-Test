@@ -3,6 +3,8 @@ use std::{
     io::{prelude::*, BufReader},
     net::{TcpListener, TcpStream},
 };
+
+
 fn main() {
     let mut x = 4;
     println!("x is: {}", x);
@@ -27,7 +29,7 @@ fn main() {
     println!("{}", SECONDS_IN_MINUTE);
 
     //integers is number for how many bits we are going to use.
-    // integers we have 
+    // integers we have
     // i8
     // i16
     // i32
@@ -37,7 +39,7 @@ fn main() {
     let i: u32 = 900;
     println!("i is: {}", i);
     // u32 is a unsigned integer
-    // unsigned integers we have 
+    // unsigned integers we have
     // u8
     // u16
     // u32
@@ -45,7 +47,7 @@ fn main() {
     // u128
 
     //floting point value
-    // f32 
+    // f32
     // f64
     //exempel:
     let floting_point: f32 = 10.9;
@@ -55,12 +57,14 @@ fn main() {
     //  boolean can only be true ore false value
     let true_or_false: bool = false;
     println!("true_or_false is: {}", true_or_false);
-    
 
     //char
-    // char can only store ting ting 
+    // char can only store ting ting
     let letter: char = 'a';
     println!("letter is: {}", letter);
+
+
+  
 
     //made a webserver with rust that will render a html file and it wil run on port 7878
     let listener = TcpListener::bind("127.0.0.1:7878").unwrap();
@@ -70,22 +74,19 @@ fn main() {
 
         handle_connection(stream);
     }
-
-
-
 }
 
 fn handle_connection(mut stream: TcpStream) {
     let buf_reader = BufReader::new(&mut stream);
-    let _http_request: Vec<_> = buf_reader
-        .lines()
-        .map(|result| result.unwrap())
-        .take_while(|line| !line.is_empty())
-        .collect();
+    let request_line = buf_reader.lines().next().unwrap().unwrap();
 
-    let status_line = "HTTP/1.1 200 OK";
-    let file_path = "src/hello.html";
-    let contents = fs::read_to_string(file_path).unwrap();
+    let (status_line, filename) = if request_line == "GET / HTTP/1.1" {
+        ("HTTP/1.1 200 OK", "src/hello.html")
+    } else {
+        ("HTTP/1.1 404 NOT FOUND", "src/404.html")
+    };
+
+    let contents = fs::read_to_string(filename).unwrap();
     let length = contents.len();
 
     let response =
