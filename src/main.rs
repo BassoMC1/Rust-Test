@@ -110,3 +110,67 @@ fn read_dir(path: &str) {
         }
     }
 }
+
+
+
+
+// This code is making a discord tamplate file
+// use std::io::stdin;
+// use std::fs::File;
+// use std::io::prelude::*;
+
+// fn create_js_bot_template() -> std::io::Result<()> {
+//     let mut file = File::create("js_bot_template.js")?;
+//     file.write_all(b"const Discord = require('discord.js');\n\nconst client = new Discord.Client();\n\nclient.on('ready', () => {\n  console.log(`Logged in as ${client.user.tag}!`);\n});\n\nclient.on('message', msg => {\n  if (msg.content === 'ping') {\n    msg.reply('Pong!');\n  }\n});\n\nclient.login('your-token-goes-here');")?;
+//     println!("JavaScript-based bot template created successfully!");
+//     Ok(())
+// }
+
+
+// fn create_ts_bot_template() -> std::io::Result<()> {
+//     let mut file = File::create("ts_bot_template.ts")?;
+//     file.write_all(b"import { Client } from 'discord.js';\n\nconst client = new Client();\n\nclient.on('ready', () => {\n  console.log(`Logged in as ${client.user.tag}!`);\n});\n\nclient.on('messageCreate', msg => {\n  if (msg.content === 'ping') {\n    msg.reply('Pong!');\n  }\n});\n\nclient.login('your-token-goes-here');")?;
+//     println!("TypeScript-based bot template created successfully!");
+//     Ok(())
+// }
+
+
+// fn main() {
+//     loop {
+//         println!("Please select a bot template type:\n1. JavaScript-based\n2. TypeScript-based");
+
+//         let mut input = String::new();
+
+//         stdin()
+//             .read_line(&mut input)
+//             .expect("Failed to read user input");
+
+//         let template_type: u32 = match input.trim().parse() {
+//             Ok(num) => num,
+//             Err(_) => continue,
+//         };
+
+//         match template_type {
+//             1 => {
+//                 if let Err(e) = create_js_bot_template() {
+//                     eprintln!("Error creating JS bot template: {:?}", e);
+//                 } else {
+//                     break;
+//                 }
+//             },
+//             2 => {
+//                 if let Err(e) = create_ts_bot_template() {
+//                     eprintln!("Error creating TS bot template: {:?}", e);
+//                 } else {
+//                     break;
+//                 }
+//             },
+//             _ => break,
+//         }
+//     }
+// }
+
+
+
+
+
